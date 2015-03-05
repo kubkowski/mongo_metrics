@@ -1,6 +1,9 @@
+require "csv"
+
 module MongoMetrics
     class Metric
         include Mongoid::Document
+
 
         field :name, type: String
         field :duration, type: Integer
@@ -23,6 +26,10 @@ module MongoMetrics
             self.instrumenter_id = args[3]
             self.payload = args[4]
             self.created_at = Time.now.utc
+        end
+
+        def to_csv
+            [name, started_at, duration, instrumenter_id, created_at].to_csv
         end
     end
 end
